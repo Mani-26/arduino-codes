@@ -13,7 +13,6 @@ String oldval;
 String newval = "No Data";
 void setup()
 {
-  analogWrite(8, contrast);
   lcd.begin(16, 2);
   mySerial.begin(9600);
   Serial.begin(9600);
@@ -21,14 +20,7 @@ void setup()
   lcd.print(" Welcome! ");
   delay(3000);
   lcd.clear();
-  {
-    pinMode(A1, OUTPUT);
-    pinMode(A0, OUTPUT);
-    pinMode(4, OUTPUT);
-    digitalWrite(A1, LOW);
-    digitalWrite(A0, LOW);
-    digitalWrite(4, LOW);
-  }
+  
 }
 void loop()
 {
@@ -58,7 +50,7 @@ void loop()
 }
 void serialEvent()
 {
-  while (Serial.available())
+ if (Serial.available() > 0)
   {
     char inChar = Serial.read();
     str[i++] = inChar;

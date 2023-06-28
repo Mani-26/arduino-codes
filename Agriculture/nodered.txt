@@ -1,0 +1,225 @@
+[
+    {
+        "id": "b84aec481c0bbf48",
+        "type": "tab",
+        "label": "Smart Irrigation",
+        "disabled": false,
+        "info": "**Hello**",
+        "env": []
+    },
+    {
+        "id": "d83ef4923861acba",
+        "type": "mqtt in",
+        "z": "b84aec481c0bbf48",
+        "name": "",
+        "topic": "MOISTURE",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "1944536e200de019",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 230,
+        "y": 240,
+        "wires": [
+            [
+                "ac5ea0b8e2c28b8b",
+                "007c07f2cb44122b",
+                "0596a180a718837c"
+            ]
+        ]
+    },
+    {
+        "id": "ca3491f6562fe128",
+        "type": "ui_chart",
+        "z": "b84aec481c0bbf48",
+        "name": "Water Level Chart",
+        "group": "cb33097a108e8fe0",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "label": "Water Level",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": true,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "50",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#00ff00",
+            "#aec7e8",
+            "#ff7f0e",
+            "#1f0bb4",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 550,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b4d3622e079b0f27",
+        "type": "ui_gauge",
+        "z": "b84aec481c0bbf48",
+        "name": "Water Level Gauge",
+        "group": "cb33097a108e8fe0",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "WaterLevel",
+        "label": "",
+        "format": "{{value}}",
+        "min": "-5",
+        "max": "100",
+        "colors": [
+            "#ff0000",
+            "#e6e600",
+            "#00ff00"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 610,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "ac5ea0b8e2c28b8b",
+        "type": "debug",
+        "z": "b84aec481c0bbf48",
+        "name": "debug 22",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "007c07f2cb44122b",
+        "type": "function",
+        "z": "b84aec481c0bbf48",
+        "name": "function 3",
+        "func": "var moisture = parseInt(msg.payload);\nvar moistureValue = (1 - ((moisture - 1) / 1024)) * 100;\nmsg.payload=moistureValue;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 180,
+        "wires": [
+            [
+                "b4d3622e079b0f27"
+            ]
+        ]
+    },
+    {
+        "id": "0596a180a718837c",
+        "type": "function",
+        "z": "b84aec481c0bbf48",
+        "name": "function 4",
+        "func": "var moisture = parseInt(msg.payload);\nvar moistureValue = (1 - ((moisture - 1) / 1024)) * 100;\nmsg.payload=moistureValue;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 320,
+        "wires": [
+            [
+                "ca3491f6562fe128"
+            ]
+        ]
+    },
+    {
+        "id": "01dbf6eaa4cb94c8",
+        "type": "ui_spacer",
+        "z": "b84aec481c0bbf48",
+        "name": "spacer",
+        "group": "cb33097a108e8fe0",
+        "order": 3,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "e42437ecf67b886d",
+        "type": "ui_spacer",
+        "z": "b84aec481c0bbf48",
+        "name": "spacer",
+        "group": "cb33097a108e8fe0",
+        "order": 1,
+        "width": "6",
+        "height": "1"
+    },
+    {
+        "id": "1944536e200de019",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "rabbitmq.youngstorage.in",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "cb33097a108e8fe0",
+        "type": "ui_group",
+        "name": "SmartAgriculture",
+        "tab": "5d71bdb11afab1ea",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "5d71bdb11afab1ea",
+        "type": "ui_tab",
+        "name": "Smart Agriculture",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

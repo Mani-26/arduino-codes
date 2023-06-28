@@ -1,0 +1,260 @@
+[
+    {
+        "id": "d1d0fb9afe9405eb",
+        "type": "tab",
+        "label": "TemperatureFan",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "b4186823a56483eb",
+        "type": "ui_gauge",
+        "z": "d1d0fb9afe9405eb",
+        "name": "",
+        "group": "75c67135770325c8",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperature",
+        "label": "° C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "60",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 570,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "6685a2f74ff14363",
+        "type": "ui_text",
+        "z": "d1d0fb9afe9405eb",
+        "group": "75c67135770325c8",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Fan Status",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "className": "",
+        "x": 570,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "84d164e2e25f5940",
+        "type": "ui_text",
+        "z": "d1d0fb9afe9405eb",
+        "group": "75c67135770325c8",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Temperature Value",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "className": "",
+        "x": 590,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "1bf1425fdc781a1c",
+        "type": "mqtt in",
+        "z": "d1d0fb9afe9405eb",
+        "name": "",
+        "topic": "TEMPERATURE",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "1944536e200de019",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 120,
+        "y": 200,
+        "wires": [
+            [
+                "468a0f847e16b9b9"
+            ]
+        ]
+    },
+    {
+        "id": "bcecbe71f69d2e87",
+        "type": "function",
+        "z": "d1d0fb9afe9405eb",
+        "name": "function 5",
+        "func": "var temperature = parseFloat(msg.payload);\nif(temperature > 30){\n    msg.payload=\"ON\";\n}\nelse{\n    msg.payload = \"OFF\";\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 320,
+        "wires": [
+            [
+                "6685a2f74ff14363"
+            ]
+        ]
+    },
+    {
+        "id": "468a0f847e16b9b9",
+        "type": "rbe",
+        "z": "d1d0fb9afe9405eb",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 330,
+        "y": 220,
+        "wires": [
+            [
+                "b4186823a56483eb",
+                "84d164e2e25f5940",
+                "bcecbe71f69d2e87"
+            ]
+        ]
+    },
+    {
+        "id": "f690ada2ace71f5d",
+        "type": "inject",
+        "z": "d1d0fb9afe9405eb",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "40",
+        "payloadType": "num",
+        "x": 170,
+        "y": 100,
+        "wires": [
+            [
+                "468a0f847e16b9b9"
+            ]
+        ]
+    },
+    {
+        "id": "f90b2656b1ac6ac8",
+        "type": "inject",
+        "z": "d1d0fb9afe9405eb",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "25",
+        "payloadType": "num",
+        "x": 170,
+        "y": 280,
+        "wires": [
+            [
+                "468a0f847e16b9b9"
+            ]
+        ]
+    },
+    {
+        "id": "59cbb0b73a8dd0a6",
+        "type": "ui_spacer",
+        "z": "d1d0fb9afe9405eb",
+        "name": "spacer",
+        "group": "75c67135770325c8",
+        "order": 1,
+        "width": 8,
+        "height": 1
+    },
+    {
+        "id": "d1549d7997684d32",
+        "type": "ui_spacer",
+        "z": "d1d0fb9afe9405eb",
+        "name": "spacer",
+        "group": "75c67135770325c8",
+        "order": 3,
+        "width": 8,
+        "height": 1
+    },
+    {
+        "id": "4c19083dbb8595c8",
+        "type": "ui_spacer",
+        "z": "d1d0fb9afe9405eb",
+        "name": "spacer",
+        "group": "75c67135770325c8",
+        "order": 5,
+        "width": 8,
+        "height": 1
+    },
+    {
+        "id": "75c67135770325c8",
+        "type": "ui_group",
+        "name": "Temperature Fan",
+        "tab": "6f75cb7ef0bfed3a",
+        "order": 1,
+        "disp": true,
+        "width": 8,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "1944536e200de019",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "rabbitmq.youngstorage.in",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "6f75cb7ef0bfed3a",
+        "type": "ui_tab",
+        "name": "TemperatureFan",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

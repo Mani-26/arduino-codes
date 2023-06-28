@@ -1,0 +1,190 @@
+[
+    {
+        "id": "8d40b977e624da66",
+        "type": "tab",
+        "label": "GasMonitor",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d08069115bfda730",
+        "type": "mqtt in",
+        "z": "8d40b977e624da66",
+        "name": "GAS",
+        "topic": "GAS",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "1944536e200de019",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 250,
+        "y": 280,
+        "wires": [
+            [
+                "c03e2dfc632c0307"
+            ]
+        ]
+    },
+    {
+        "id": "184f9cbf2fb0a595",
+        "type": "ui_gauge",
+        "z": "8d40b977e624da66",
+        "name": "",
+        "group": "e41cecb4ba216e0f",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Gas_level",
+        "label": "",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "1024",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 560,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "d6a5e4f68f3687a5",
+        "type": "ui_chart",
+        "z": "8d40b977e624da66",
+        "name": "",
+        "group": "e41cecb4ba216e0f",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "label": "Gas_level",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#00ff00",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ad8e5",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 560,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c03e2dfc632c0307",
+        "type": "rbe",
+        "z": "8d40b977e624da66",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 410,
+        "y": 280,
+        "wires": [
+            [
+                "d6a5e4f68f3687a5",
+                "184f9cbf2fb0a595"
+            ]
+        ]
+    },
+    {
+        "id": "46b96c3c1c9a7221",
+        "type": "ui_spacer",
+        "z": "8d40b977e624da66",
+        "name": "spacer",
+        "group": "e41cecb4ba216e0f",
+        "order": 1,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "e426e98402be746f",
+        "type": "ui_spacer",
+        "z": "8d40b977e624da66",
+        "name": "spacer",
+        "group": "e41cecb4ba216e0f",
+        "order": 3,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "1944536e200de019",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "rabbitmq.youngstorage.in",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "e41cecb4ba216e0f",
+        "type": "ui_group",
+        "name": "GasMonitor",
+        "tab": "9b9151a7428c4c5d",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "9b9151a7428c4c5d",
+        "type": "ui_tab",
+        "name": "Gas_Monitor",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

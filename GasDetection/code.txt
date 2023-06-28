@@ -1,0 +1,76 @@
+#include <ESP8266WiFi.h>
+#include <PubSubClient.h>
+
+const char* mqttServer = "rabbitmq.youngstorage.in";
+const int mqttPort = 1883;
+const char* mqttUser = "guest";
+const char* mqttPassword = "guest";
+const char* mqttTopic = "GAS";
+
+const int gasSensorPin = A0;
+const int buzzerPin = D1;
+const int redLedPin = D2;
+const int greenLedPin = D3;
+
+int threshold = 250;
+
+const char* ssid = "project";
+const char* password = "no.password";
+
+WiFiClient espClient;
+PubSubClient mqttClient(espClient);
+
+void setup() {
+  pinMode(buzzerPin, OUTPUT);
+  pinMode(redLedPin, OUTPUT);
+  pinMode(greenLedPin, OUTPUT);
+
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+  }
+
+  mqttClient.setServer(mqttServer, mqttPort);
+  while (!mqttClient.connected()) {
+    if (mqttClient.connect("ESP8266Client", mqttUser, mqttPassword)) {
+      break;
+    }
+    delay(1000);
+  }
+}
+
+void loop() {
+  int gasValue = analogRead(gasSensorPin);
+
+  char payload[10];
+  sprintf(payload, "%d", gasValue);
+  mqttClient.publish(mqttTopic, payload);
+
+  if (gasValue > threshold) {
+    digitalWrite(buzzerPin, HIGH);
+    digitalWrite(redLedPin, HIGH);
+    digitalWrite(greenLedPin, LOW);
+    delay(500);
+  } else {
+    digitalWrite(buzzerPin, LOW);
+    digitalWrite(redLedPin, LOW);
+    digitalWrite(greenLedPin, HIGH);
+  }
+
+  // Maintain MQTT connection
+  if (!mqttClient.connected()) {
+    reconnectMQTT();
+  }
+  mqttClient.loop();
+
+  delay(500);
+}
+
+void reconnectMQTT() {
+  while (!mqttClient.connected()) {
+    if (mqttClient.connect("ESP8266Client", mqttUser, mqttPassword)) {
+      break;
+    }
+    delay(1000);
+  }
+}

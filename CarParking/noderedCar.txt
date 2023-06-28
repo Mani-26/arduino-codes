@@ -1,0 +1,180 @@
+[
+    {
+        "id": "200c48643b6423e8",
+        "type": "tab",
+        "label": "CarParking",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "80627bb6560e7652",
+        "type": "rbe",
+        "z": "200c48643b6423e8",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 430,
+        "y": 280,
+        "wires": [
+            [
+                "2f7ec70d95702384",
+                "6ed8b77b390c18ca",
+                "3e695e097a7c6801"
+            ]
+        ]
+    },
+    {
+        "id": "4f52a209f3aac7f0",
+        "type": "mqtt in",
+        "z": "200c48643b6423e8",
+        "name": "",
+        "topic": "COUNT",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "1944536e200de019",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 290,
+        "y": 340,
+        "wires": [
+            [
+                "80627bb6560e7652"
+            ]
+        ]
+    },
+    {
+        "id": "2f7ec70d95702384",
+        "type": "ui_text",
+        "z": "200c48643b6423e8",
+        "group": "fa36ec3b836717c4",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Car Count",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 690,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "6ed8b77b390c18ca",
+        "type": "debug",
+        "z": "200c48643b6423e8",
+        "name": "debug 23",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "3e695e097a7c6801",
+        "type": "ui_gauge",
+        "z": "200c48643b6423e8",
+        "name": "",
+        "group": "fa36ec3b836717c4",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "CarCount",
+        "label": "",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "5",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 640,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "8bec7ef4a6bfe672",
+        "type": "ui_spacer",
+        "z": "200c48643b6423e8",
+        "name": "spacer",
+        "group": "fa36ec3b836717c4",
+        "order": 1,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "0fc93985a00be988",
+        "type": "ui_spacer",
+        "z": "200c48643b6423e8",
+        "name": "spacer",
+        "group": "fa36ec3b836717c4",
+        "order": 3,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "1944536e200de019",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "rabbitmq.youngstorage.in",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "fa36ec3b836717c4",
+        "type": "ui_group",
+        "name": "Car Parking",
+        "tab": "a78bedc1b509b928",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "a78bedc1b509b928",
+        "type": "ui_tab",
+        "name": "CAR PARKING",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

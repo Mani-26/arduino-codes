@@ -1,0 +1,120 @@
+#include <ESP8266WiFi.h>
+#include <PubSubClient.h>
+#include <Servo.h>
+
+const char* ssid = "project";
+const char* password = "no.password";
+
+const char* mqtt_server = "rabbitmq.youngstorage.in";
+const int mqtt_port = 1883;
+const char* mqtt_user = "guest";
+const char* mqtt_password = "guest";
+const char* mqtt_topic = "COUNT";
+
+const int MAX_CARS = 5; 
+
+int carCount = 0; 
+bool isFull = false; 
+
+Servo Servo_in;
+Servo Servo_out;
+
+const int Ir_in = D1; 
+const int Ir_out = D5;
+
+WiFiClient espClient;
+PubSubClient client(espClient);
+
+void setup() {
+  pinMode(Ir_in, INPUT);
+  pinMode(Ir_out, INPUT);
+
+  Servo_in.attach(D2); 
+  Servo_out.attach(D6); 
+
+  Serial.begin(115200);
+  setupWiFi();
+  client.setServer(mqtt_server, mqtt_port);
+  client.setCallback(callback);
+}
+
+void loop() {
+  if (!client.connected()) {
+    reconnect();
+  }
+  client.loop();
+
+  int carDetected1 = digitalRead(Ir_in);
+  int carDetected2 = digitalRead(Ir_out);
+
+  if (carDetected1 == LOW && carCount < MAX_CARS && !isFull) {
+    carCount++;
+    delay(500); // Delay for car stabilization
+  }
+
+  if (carDetected2 == LOW && carCount > 0) {
+    carCount--;
+    isFull = false;
+    delay(500); // Delay for car stabilization
+  }
+
+  if (carCount == MAX_CARS) {
+    isFull = true;
+  }
+
+  publishCount();
+
+  controlServoMotors();
+}
+
+void setupWiFi() {
+  delay(10);
+  Serial.println();
+  Serial.print("Connecting to ");
+  Serial.println(ssid);
+
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+
+  Serial.println("");
+  Serial.println("WiFi connected");
+  Serial.print("IP address: ");
+  Serial.println(WiFi.localIP());
+}
+
+void reconnect() {
+  while (!client.connected()) {
+    Serial.print("Attempting MQTT connection...");
+    if (client.connect("ESP8266Client", mqtt_user, mqtt_password)) {
+      Serial.println("connected");
+    } else {
+      Serial.print("failed, rc=");
+      Serial.print(client.state());
+      Serial.println(" retrying in 5 seconds");
+      delay(5000);
+    }
+  }
+}
+
+void publishCount() {
+  char msg[10];
+  snprintf(msg, sizeof(msg), "%d", carCount);
+  client.publish(mqtt_topic, msg);
+}
+
+void controlServoMotors() {
+  if (carCount < MAX_CARS) {
+    Servo_in.write(90); // Open the barrier
+    Servo_out.write(90);
+  } else {
+    Servo_in.write(0); // Close the barrier
+    Servo_out.write(180);
+  }
+}
+
+void callback(char* topic, byte* payload, unsigned int length) {
+}
