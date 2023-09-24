@@ -1,15 +1,15 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 #include <DHT.h>
-const char* ssid = "project";
-const char* password = "no.password";
-int threshold = 30;
+const char* ssid = "IoT";
+const char* password = "password";
+int threshold = 35;
 const char* mqtt_server = "rabbitmq.youngstorage.in";
 const int mqtt_port = 1883;
 const char* mqtt_user = "guest";
 const char* mqtt_password = "guest";
 const char* mqtt_topic = "TEMPERATURE";
-const int dhtPin = D0;
+const int dhtPin = D1;
 const int buzzerPin = D2;
 const int redLedPin = D3;
 const int greenLedPin = D4;
@@ -44,6 +44,7 @@ void setup() {
 }
 void loop() {
   float temperature = dht.readTemperature();
+  Serial.println(temperature);
   char temperatureStr[6];
   dtostrf(temperature, 4, 2, temperatureStr);
   client.publish(mqtt_topic, temperatureStr);
@@ -61,6 +62,7 @@ void loop() {
     digitalWrite(buzzerPin, LOW);
   }
   client.loop();
+  delay(1000);
 }
 void callback(char* topic, byte* payload, unsigned int length) {
 }
