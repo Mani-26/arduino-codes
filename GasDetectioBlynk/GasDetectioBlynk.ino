@@ -5,28 +5,28 @@
 #include <ESP8266WiFi.h>
 #include <BlynkSimpleEsp8266.h>
 char auth[] = BLYNK_AUTH_TOKEN;
-char ssid[] = "project"; 
-char pass[] = "nopassword"; 
+char ssid[] = "project";
+char pass[] = "nopassword";
 int GasSensor = A0;
 int data = 0;
 int sensorThres = 100;
 BlynkTimer timer;
-void sendSensor(){
- int data = analogRead(GasSensor);
- Blynk.virtualWrite(V0, data);
+void sendSensor() {
+  int data = analogRead(GasSensor);
+  Blynk.virtualWrite(V0, data);
   Serial.print("Pin A0: ");
   Serial.println(data);
-  if(data > 90){
-    Blynk.logEvent("gasleakagealert","Alert! Gas Leakage Detected..!");
+  if (data > 90) {
+    Blynk.logEvent("gasleakagealert", "Alert! Gas Leakage Detected..!");
   }
 }
-void setup(){
+void setup() {
   pinMode(GasSensor, INPUT);
-   Serial.begin(115200);
+  Serial.begin(115200);
   Blynk.begin(auth, ssid, pass);
   timer.setInterval(2500L, sendSensor);
 }
-void loop(){
+void loop() {
   Blynk.run();
   timer.run();
 }
