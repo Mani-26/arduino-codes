@@ -25,6 +25,63 @@ String rfidTag;
 String pin;
 char customKey;
 
+void Auth(String rfidTag, String pin) {
+  pin.toUpperCase();
+  if (rfidTag.equals("43 21 26 AC")) {
+    if (pin.equals("4321")) {
+      Serial.println(1);
+      Serial.write(1);
+    }
+    else {
+      Serial.println(0);
+      Serial.write(0);
+    }
+  }
+  else if (rfidTag.equals("F3 76 54 A8")) {
+    if (pin.equals("F376")) {
+      Serial.println(1);
+      Serial.write(1);
+    }
+    else {
+      Serial.println(0);
+      Serial.write(0);
+    }
+  }
+  else if (rfidTag.equals("03 38 5E A8")) {
+    if (pin.equals("0338")) {
+      Serial.println(1);
+      Serial.write(1);
+    }
+    else {
+      Serial.println(0);
+      Serial.write(0);
+    }
+  }
+  else if (rfidTag.equals("89 CB B8 99")) {
+    if (pin.equals("89CB")) {
+      Serial.println(1);
+      Serial.write(1);
+    }
+    else {
+      Serial.println(0);
+      Serial.write(0);
+    }
+  }
+  else if (rfidTag.equals("19 80 B8 99")) {
+    if (pin.equals("1980")) {
+      Serial.println(1);
+      Serial.write(1);
+    }
+    else {
+      Serial.println(0);
+      Serial.write(0);
+    }
+  }
+  else {
+    Serial.println("Scan the Tag again");
+  }
+}
+
 void setup() {
   Serial.begin(9600);
   SPI.begin();      // Initiate  SPI bus
@@ -46,69 +103,5 @@ void loop() {
     }
     Serial.println(customKey);
   }
-  Auth();
-}
-
-void Auth(rfidTag, pin) {
-  pin = pin.toUpperCase();
-  switch (rfidTag) {
-    case "43 21 26 AC": {
-        if (pin == 4321) {
-          Serial.println(1);
-          Serial.write(1);
-        }
-        else {
-          Serial.println(0);
-          Serial.write(0);
-        }
-        break;
-      }
-    case "F3 76 54 A8": {
-        if (pin == F376) {
-          Serial.println(1);
-          Serial.write(1);
-        }
-        else {
-          Serial.println(0);
-          Serial.write(0);
-        }
-        break;
-      }
-    case "03 38 5E A8": {
-        if (pin == 0338) {
-          Serial.println(1);
-          Serial.write(1);
-        }
-        else {
-          Serial.println(0);
-          Serial.write(0);
-        }
-        break;
-      }
-    case "89 CB B8 99": {
-        if (pin == 89CB) {
-          Serial.println(1);
-          Serial.write(1);
-        }
-        else {
-          Serial.println(0);
-          Serial.write(0);
-        }
-        break;
-      }
-    case "19 80 B8 99": {
-        if (pin == 1980) {
-          Serial.println(1);
-          Serial.write(1);
-        }
-        else {
-          Serial.println(0);
-          Serial.write(0);
-        }
-        break;
-      }
-    default:
-      Serial.println("Scan the Tag again");
-      break;
-  }
+  Auth(rfidTag, pin);
 }
