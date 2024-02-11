@@ -83,6 +83,7 @@ void obstacle() {
       turnLeft();
       r = 0;
     }
+    obstacle();
   }
   else {
     moveForward();
@@ -115,5 +116,8 @@ void loop() {
   rfidTag.toUpperCase();
   if (rfidTag == "A3AE8FA6") {
     obstacle();
+  }
+  else if("53235B0E"){
+    stopCar();
   }
 }

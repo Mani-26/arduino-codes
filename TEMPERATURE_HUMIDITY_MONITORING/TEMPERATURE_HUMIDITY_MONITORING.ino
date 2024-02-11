@@ -24,7 +24,7 @@ void setup()
 }
 void loop()
 {
-  int readData = DHT.read11(dataPin);
+  int readData = DHT.read(dataPin);
   hum = DHT.humidity;
   temp = DHT.temperature;
   lcd.setCursor(0, 0);
